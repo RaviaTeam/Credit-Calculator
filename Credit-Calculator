@@ -1,0 +1,56 @@
+from tkinter import *  
+
+master = Tk()
+master.title("Credit Calculator")
+
+Label(master, text="Masukkan Jumlah Pinjaman:").grid(row=0)
+Label(master, text="Masukkan Bunga(%):").grid(row=1)
+Label(master, text="Masukkan Lama Pinjam(Bulan):").grid(row=2)
+
+Label(master, text="Jumlah Bunga:").grid(row=3)
+Label(master, text="Total Pembayaran:").grid(row=4)
+Label(master, text="Angsuran Per-Bulan:").grid(row=5)
+
+A1 = Entry(master)
+A1.grid(row=0, column=1)
+
+A2 = Entry(master)
+A2.grid(row=1, column=1)
+
+A3 = Entry(master)
+A3.grid(row=2, column=1)
+
+B = Entry(master, state=DISABLED)
+B.grid(row=3, column=1)
+Cn = Entry(master, state=DISABLED)
+Cn.grid(row=4, column=1)
+Dn = Entry(master, state=DISABLED)
+Dn.grid(row=5, column=1)
+
+def calc(B, Cn, Dn):
+    C0 = float(A1.get())
+    p = float(A2.get())
+    n1 = float(A3.get())
+
+    bunga = C0 * p / 100
+    
+    B.configure(state=NORMAL) 
+    B.delete(0, 'end') 
+    B.insert(0, str((C0 * p ) / 100)) 
+    B.configure(state=DISABLED) 
+
+    Cn.configure(state=NORMAL) 
+    Cn.delete(0, 'end') 
+    Cn.insert(0, str(C0 * (1 + (p * n1) / 100)))
+    Cn.configure(state=DISABLED) 
+
+    Dn.configure(state=NORMAL) 
+    Dn.delete(0, 'end') 
+    Dn.insert(0, str(bunga +(C0 / n1)))
+    Dn.configure(state=DISABLED)
+    
+Button(master, text='Quit', command=master.quit).grid(row=7, column=0, sticky=E, pady=5)
+Button(master, text='Show', command=lambda: calc(B, Cn, Dn)).grid(row=7, column=1, sticky=W, pady=5)
+
+mainloop()
+
